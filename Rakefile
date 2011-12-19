@@ -1,7 +1,7 @@
 # encoding: utf-8
-
 require 'rubygems'
 require 'bundler'
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/alexlevin/rack-affiliates"
   gem.license = "MIT"
   gem.summary = %Q{Tracks referrals came via an affiliated links.}
-  gem.description = %Q{If the user clicked through from an affiliated site, this middleware will track affiliate id and referring site.} 
+  gem.description = %Q{If the user clicked through from an affiliated site, this middleware will track affiliate tag, referring url and time.} 
   gem.email = "experiment17@gmail.com"
   gem.authors = ["Alex Levin"]
 end

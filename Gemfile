@@ -7,7 +7,5 @@ group :development do
   gem "rcov", ">= 0"
   gem "rack-test"
   gem "minitest"
+  gem "timecop"
 end
-
-
-
