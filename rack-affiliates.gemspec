@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "lib/rack-affiliates.rb",
+    "rack-affiliates.gemspec",
     "spec/helper.rb",
     "spec/rack_affiliates_spec.rb"
   ]
