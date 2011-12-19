@@ -42,9 +42,9 @@ Now you can check any request to see who came to your site via an affiliated lin
 
     def index
       str = if request.env['affiliate.tag] && affiliate = User.find_by_affiliate_tag(request.env['affiliate.tag'])
-        "Howdy, referral! You've been referred here by #{affiliate.name} and from #{request.env['affiliate.from']}"
+        "Howdy, referral! You've been referred here by #{affiliate.name} and from #{request.env['affiliate.from']} @ #{Time.at(env['affiliate.time'])}"
       else
-        "Glad you found us by your own."
+        "We're so glad you found us on your own!"
       end
       
       render :text => str
@@ -56,12 +56,12 @@ Now you can check any request to see who came to your site via an affiliated lin
 Customization
 -------------
 
-You can customize default parameter name <code>ref</code> by by providing <code>:param</code> option.
-If you want to save your affiliate id for later use, you can specify time to live with <code>:ttl</code> option (default is 1.month). Set <code>:ttl => 0</code> to prevent setting a cookie with affiliate id.
+You can customize default parameter name <code>ref</code> by providing <code>:param</code> option.
+If you want to save your affiliate id for later use, you can specify time to live with <code>:ttl</code> option (default is 30 days). 
 
     class Application < Rails::Application
       ...
-      config.middleware.use Rack::Referrals.new :param => 'aff_id', :ttl => 0
+      config.middleware.use Rack::Referrals.new :param => 'aff_id', :ttl => 3.months 
       ...
     end
 
