@@ -1,8 +1,7 @@
 Rack::Referrals
 =============
 
-Rack::Affiliates is a rack middleware that extracts information about the referrals came from an an affiliated site. Specifically, it looks up for parameter (eg. ref_id) in the request or a saved cookie. If found it persists referal tag in the cookie for later use.
-
+Rack::Affiliates is a rack middleware that extracts information about the referrals came from an an affiliated site. Specifically, it looks up for parameter (eg. <code>ref</code> by default) in the request. If found it persists referal tag, referring url and time in a cookie for later use.
 
 Purpose
 -------
@@ -38,19 +37,17 @@ Add the middleware to your application stack:
 
 Now you can check any request to see who came to your site via an affiliated link and use this information in your application. Moreover, referrer_id is saved in the cookie and will come into play if user returns to your site later.
 
-  class ExampleController < ApplicationController
-
-    def index
-      str = if request.env['affiliate.tag] && affiliate = User.find_by_affiliate_tag(request.env['affiliate.tag'])
-        "Howdy, referral! You've been referred here by #{affiliate.name} and from #{request.env['affiliate.from']} @ #{Time.at(env['affiliate.time'])}"
-      else
-        "We're so glad you found us on your own!"
+    class ExampleController < ApplicationController
+      def index
+        str = if request.env['affiliate.tag] && affiliate = User.find_by_affiliate_tag(request.env['affiliate.tag'])
+          "Howdy, referral! You've been referred here by #{affiliate.name} and from #{request.env['affiliate.from']} @ #{Time.at(env['affiliate.time'])}"
+        else
+          "We're so glad you found us on your own!"
+        end
+        
+        render :text => str
       end
-      
-      render :text => str
     end
-    
-  end
 
 
 Customization
@@ -61,7 +58,18 @@ If you want to save your affiliate id for later use, you can specify time to liv
 
     class Application < Rails::Application
       ...
-      config.middleware.use Rack::Referrals.new :param => 'aff_id', :ttl => 3.months 
+      config.middleware.use Rack::Affiliates.new :param => 'aff_id', :ttl => 3.months 
       ...
     end
+
+The <code>:domain</code> option allows to customize cookie domain. 
+
+    class Application < Rails::Application
+      ...
+      config.middleware.use Rack::Affiliates.new :domain => '.example.org'
+      ...
+    end
+
+Middleware will set cookie on '.example.org' domain so it's accessible on 'www.example.org', 'app.example.org' etc.
+
 

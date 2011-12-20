@@ -1,18 +1,19 @@
 module Rack
   #
   # Rack Middleware for extracting information from the request params and cookies.
-  # It populates +env['affiliate.tag']+ and 
-  # +env['affiliate.from']+ if it detects a request came from an affiliated link 
+  # It populates +env['affiliate.tag']+, # +env['affiliate.from']+ and
+  # +env['affiliate.time'] if it detects a request came from an affiliated link 
   #
   class Affiliates
     COOKIE_TAG = "aff_tag"
     COOKIE_FROM = "aff_from"
-    COOKIE_WHEN = "aff_time"
+    COOKIE_TIME = "aff_time"
 
     def initialize(app, opts = {})
       @app = app
       @param = opts[:param] || "ref"
       @cookie_ttl = opts[:ttl] || 60*60*24*30  # 30 days
+      @cookie_domain = opts[:domain] || nil
     end
 
     def call(env)
@@ -55,16 +56,19 @@ module Rack
     end
 
     def cookie_info(req)
-      [req.cookies[COOKIE_TAG], req.cookies[COOKIE_FROM], req.cookies[COOKIE_WHEN].to_i] 
+      [req.cookies[COOKIE_TAG], req.cookies[COOKIE_FROM], req.cookies[COOKIE_TIME].to_i] 
     end
 
     protected
     def bake_cookies(res, tag, from, time)
       expires = Time.now + @cookie_ttl
-
-      res.set_cookie(COOKIE_TAG, :value => tag, :path => "/", :expires => expires)
-      res.set_cookie(COOKIE_FROM, :value => from, :path => "/", :expires => expires)
-      res.set_cookie(COOKIE_WHEN, :value => time, :path => "/", :expires => expires)
+      { COOKIE_TAG => tag, 
+        COOKIE_FROM => from, 
+        COOKIE_TIME => time }.each do |key, value|
+          cookie_hash = {:value => value, :expires => expires}
+          cookie_hash[:domain] = @cookie_domain if @cookie_domain
+          res.set_cookie(key, cookie_hash)
+      end 
     end
   end
 end
