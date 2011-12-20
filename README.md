@@ -56,6 +56,7 @@ Customization
 You can customize default parameter name <code>ref</code> by providing <code>:param</code> option.
 If you want to save your affiliate id for later use, you can specify time to live with <code>:ttl</code> option (default is 30 days). 
 
+    #Rails 3 in config/application.rb
     class Application < Rails::Application
       ...
       config.middleware.use Rack::Affiliates.new :param => 'aff_id', :ttl => 3.months 
