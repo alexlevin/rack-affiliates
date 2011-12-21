@@ -12,7 +12,7 @@ Affiliate links tracking is very common task if you want to promote your online 
 2. The affiliate promotes your business at http://partner.org by linking to your site with like <code>http://yoursite.org?ref=ABC123</code>.
 3. A user clicks through the link and lands on your site.
 4. Rack::Affiliates middleware finds <code>ref</code> parameter in the request, extracts affiliate tag and saves it in a cookie
-5. User signs up (now or later), you mark add a referral to affiliate
+5. User signs up (now or later) and you mark it as a referral from your partner
 6. PROFIT!
 
 Installation
