@@ -1,5 +1,5 @@
-Rack::Referrals
-=============
+Rack::Affiliates
+================
 
 Rack::Affiliates is a rack middleware that extracts information about the referrals came from an affiliated site. Specifically, it looks up for specific parameter (<code>ref</code> by default) in the request. If found, it persists affiliate tag, referring url and time in a cookie for later use.
 
@@ -79,5 +79,10 @@ The <code>:domain</code> option allows to customize cookie domain.
       ...
     end
 
-Middleware will set cookie on '.example.org' so it's  accessible on 'www.example.org', 'app.example.org' etc.
+Middleware will set cookie on <code>.example.org</code> so it's accessible on <code>www.example.org</code>, <code>app.example.org</code> etc.
+
+Credits
+=======
+
+Thanks goes to Rack::Referrals (https://github.com/deviantech/rack-referrals) for the inspiration.
 
