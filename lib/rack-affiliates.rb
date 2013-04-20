@@ -35,16 +35,14 @@ module Rack
         env['affiliate.from'] = from
         env['affiliate.time'] = time
       end
-      
+
       status, headers, body = @app.call(env)
 
-      response = Rack::Response.new body, status, headers
-
       if tag != cookie_tag
-        bake_cookies(response, tag, from, time)
+        bake_cookies(headers, tag, from, time)
       end
 
-      response.finish
+      [status, headers, body]
     end
 
     def affiliate_info(req)
@@ -60,14 +58,14 @@ module Rack
     end
 
     protected
-    def bake_cookies(res, tag, from, time)
+    def bake_cookies(headers, tag, from, time)
       expires = Time.now + @cookie_ttl
       { COOKIE_TAG => tag, 
         COOKIE_FROM => from, 
         COOKIE_TIME => time }.each do |key, value|
           cookie_hash = {:value => value, :expires => expires}
           cookie_hash[:domain] = @cookie_domain if @cookie_domain
-          res.set_cookie(key, cookie_hash)
+          Rack::Utils.set_cookie_header!(headers, key, cookie_hash)
       end 
     end
   end
