@@ -66,7 +66,7 @@ By default cookie is set for 30 days, you can extend time to live with <code>:tt
     #Rails 3 in config/application.rb
     class Application < Rails::Application
       ...
-      config.middleware.use Rack::Affiliates.new, {:param => 'aff_id', :ttl => 3.months}
+      config.middleware.use Rack::Affiliates, {:param => 'aff_id', :ttl => 3.months}
       ...
     end
 
@@ -75,7 +75,7 @@ The <code>:domain</code> option allows to customize cookie domain.
     #Rails 3 in config/application.rb
     class Application < Rails::Application
       ...
-      config.middleware.use Rack::Affiliates.new, :domain => '.example.org'
+      config.middleware.use Rack::Affiliates, :domain => '.example.org'
       ...
     end
 
