@@ -31,12 +31,4 @@ Rake::TestTask.new(:spec) do |test|
   test.verbose = true
 end
 
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'spec'
-  test.pattern = 'spec/**/*_spec.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
-end
-
 task :default => :spec

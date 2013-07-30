@@ -9,6 +9,9 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
+require "simplecov"
+SimpleCov.start
+
 require "minitest/spec"
 require "minitest/autorun"
 require "rack/test"
