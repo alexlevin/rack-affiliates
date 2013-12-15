@@ -46,7 +46,7 @@ Now you can check any request to see who came to your site via an affiliated lin
 
     class ExampleController < ApplicationController
       def index
-        str = if request.env['affiliate.tag] && affiliate = User.find_by_affiliate_tag(request.env['affiliate.tag'])
+        str = if request.env['affiliate.tag'] && affiliate = User.find_by_affiliate_tag(request.env['affiliate.tag'])
           "Halo, referral! You've been referred here by #{affiliate.name} from #{request.env['affiliate.from']} @ #{Time.at(env['affiliate.time'])}"
         else
           "We're glad you found us on your own!"
