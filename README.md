@@ -81,6 +81,8 @@ The <code>:domain</code> option allows to customize cookie domain.
 
 Middleware will set cookie on <code>.example.org</code> so it's accessible on <code>www.example.org</code>, <code>app.example.org</code> etc.
 
+The <code>:overwrite</code> option allows to set whether to overwrite the existing affiliate tag previously stored in cookies. By default it is set to `true`.
+
 Credits
 =======
 

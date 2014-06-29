@@ -14,6 +14,7 @@ module Rack
       @param = opts[:param] || "ref"
       @cookie_ttl = opts[:ttl] || 60*60*24*30  # 30 days
       @cookie_domain = opts[:domain] || nil
+      @allow_overwrite = opts[:overwrite].nil? ? true : opts[:overwrite] 
     end
 
     def call(env)
@@ -27,7 +28,13 @@ module Rack
       end
 
       if params_tag && params_tag != cookie_tag
-        tag, from, time = params_info(req)
+        if tag
+          if @allow_overwrite
+            tag, from, time = params_info(req)
+          end
+        else
+          tag, from, time = params_info(req)
+        end
       end
 
       if tag
