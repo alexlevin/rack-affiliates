@@ -15,6 +15,7 @@ module Rack
       @cookie_ttl = opts[:ttl] || 60*60*24*30  # 30 days
       @cookie_domain = opts[:domain] || nil
       @allow_overwrite = opts[:overwrite].nil? ? true : opts[:overwrite] 
+      @cookie_path = opts[:path] || nil
     end
 
     def call(env)
@@ -42,7 +43,7 @@ module Rack
         env['affiliate.from'] = from
         env['affiliate.time'] = time
       end
-
+      
       status, headers, body = @app.call(env)
 
       if tag != cookie_tag
@@ -72,6 +73,7 @@ module Rack
         COOKIE_TIME => time }.each do |key, value|
           cookie_hash = {:value => value, :expires => expires}
           cookie_hash[:domain] = @cookie_domain if @cookie_domain
+          cookie_hash[:path] = @cookie_path if @cookie_path
           Rack::Utils.set_cookie_header!(headers, key, cookie_hash)
       end 
     end
