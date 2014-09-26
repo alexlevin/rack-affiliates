@@ -63,7 +63,7 @@ Customization
 You can customize parameter name by providing <code>:param</code> option (default is <code>ref</code>).
 By default cookie is set for 30 days, you can extend time to live with <code>:ttl</code> option (default is 30 days). 
 
-    #Rails 3 in config/application.rb
+    #Rails 3/4 in config/application.rb
     class Application < Rails::Application
       ...
       config.middleware.use Rack::Affiliates, {:param => 'aff_id', :ttl => 3.months}
@@ -72,10 +72,19 @@ By default cookie is set for 30 days, you can extend time to live with <code>:tt
 
 The <code>:domain</code> option allows to customize cookie domain. 
 
-    #Rails 3 in config/application.rb
+    #Rails 3/4 in config/application.rb
     class Application < Rails::Application
       ...
       config.middleware.use Rack::Affiliates, :domain => '.example.org'
+      ...
+    end
+
+The <code>:path</code> option allows to hardcode the cookie path allowing you to record affiliate links at any URL on your site.
+
+    #Rails 3/4 in config/application.rb
+    class Application < Rails::Application
+      ...
+      config.middleware.use Rack::Affiliates, { :path => '/' }
       ...
     end
 
