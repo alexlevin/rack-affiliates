@@ -92,6 +92,17 @@ Middleware will set cookie on <code>.example.org</code> so it's accessible on <c
 
 The <code>:overwrite</code> option allows to set whether to overwrite the existing affiliate tag previously stored in cookies. By default it is set to `true`.
 
+If you want to capture more attributes from the query string whenever it comes from an affiliate you can define those with the <code>extra_params</code> value.
+
+    #Rails 3/4 in config/application.rb
+    class Application < Rails::Application
+      ...
+      config.middleware.use Rack::Affiliates, { :extra_params => [:great_query_parameter] }
+      ...
+    end
+
+These will be availble through <code>env['affiliate.extras']</code> as a hash with the same keys.
+
 Credits
 =======
 
