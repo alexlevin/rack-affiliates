@@ -17,18 +17,22 @@ Affiliate links tracking is very common task if you want to promote your online 
 
 Installation
 ------------
+Works with Rails version **> 2** (including Rails 5).
 
-Piece a cake:
+Include the gem in your Gemfile:
+
+    gem 'rack-affiliates'
+    
+or install it:
 
     gem install rack-affiliates
 
-
-Rails 3 Example Usage
+Rails Example Usage
 ---------------------
 
 Add the middleware to your application stack:
 
-    # Rails 3 App - in config/application.rb
+    # Rails 3+ App - in config/application.rb
     class Application < Rails::Application
       ...
       config.middleware.use Rack::Affiliates
@@ -63,7 +67,7 @@ Customization
 You can customize parameter name by providing <code>:param</code> option (default is <code>ref</code>).
 By default cookie is set for 30 days, you can extend time to live with <code>:ttl</code> option (default is 30 days). 
 
-    #Rails 3/4 in config/application.rb
+    #Rails 3+ in config/application.rb
     class Application < Rails::Application
       ...
       config.middleware.use Rack::Affiliates, {:param => 'aff_id', :ttl => 3.months}
@@ -72,7 +76,7 @@ By default cookie is set for 30 days, you can extend time to live with <code>:tt
 
 The <code>:domain</code> option allows to customize cookie domain. 
 
-    #Rails 3/4 in config/application.rb
+    #Rails 3+ in config/application.rb
     class Application < Rails::Application
       ...
       config.middleware.use Rack::Affiliates, :domain => '.example.org'
@@ -81,7 +85,7 @@ The <code>:domain</code> option allows to customize cookie domain.
 
 The <code>:path</code> option allows to hardcode the cookie path allowing you to record affiliate links at any URL on your site.
 
-    #Rails 3/4 in config/application.rb
+    #Rails 3+ in config/application.rb
     class Application < Rails::Application
       ...
       config.middleware.use Rack::Affiliates, { :path => '/' }
@@ -94,7 +98,7 @@ The <code>:overwrite</code> option allows to set whether to overwrite the existi
 
 If you want to capture more attributes from the query string whenever it comes from an affiliate you can define those with the <code>extra_params</code> value.
 
-    #Rails 3/4 in config/application.rb
+    #Rails 3+ in config/application.rb
     class Application < Rails::Application
       ...
       config.middleware.use Rack::Affiliates, { :extra_params => [:great_query_parameter] }
@@ -107,4 +111,3 @@ Credits
 =======
 
 Thanks goes to Rack::Referrals (https://github.com/deviantech/rack-referrals) for the inspiration.
-
